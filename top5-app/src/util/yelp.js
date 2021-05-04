@@ -33,7 +33,7 @@ const yelp = {
                                 phone: business.phone,
                                 rating: business.rating,
                                 reviewCount: business.review_count,
-                                reviewComment: review.text,
+                                reviewerComment: review.text,
                                 reviewRating: review.rating,
                                 reviewer: review.user.name
                             }
