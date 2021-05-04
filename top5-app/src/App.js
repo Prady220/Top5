@@ -26,7 +26,7 @@ export default function App() {
   }
 
   function handleLimitChange(e) {
-    const inputLimit = parseInt(e.target.value);
+    let inputLimit = parseInt(e.target.value);
     setLimit(inputLimit > 15 ? 15 : inputLimit);
   }
 
@@ -35,9 +35,14 @@ export default function App() {
       setLoading(true);
       const businessesList = await Yelp.searchInYelp(term, location, limit);
       const businessesResolved = [];
-      businessesList.map(async business => await business.then(value => businessesResolved.push(value)));
+      businessesList.map(
+        async business =>
+          await business.then(value => businessesResolved.push(value))
+      );
       setBusinesses(businessesResolved);
-      setTimeout(() => {setLoading(false)}, 6000);
+      setTimeout(() => {
+        setLoading(false);
+      }, 6000);
     } catch (error) {
       setError("Bad request");
       setLoading(false);
@@ -59,11 +64,17 @@ export default function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <SearchBar searchInYelp={searchInYelp} handleLimitChange={handleLimitChange}
-        handleLocationChange={handleLocationChange} handleTermChange={handleTermChange}/>
+        <SearchBar 
+          searchInYelp={searchInYelp}
+          handleLimitChange={handleLimitChange}
+          handleLocationChange={handleLocationChange}
+          handleTermChange={handleTermChange}
+        />
         {isLoading}
         {errors}
-        <h2>Top {limit} places to get {term} in {location}</h2>
+        <h2>
+          Top {limit} places to get {term} in {location}
+        </h2>
         { businessesElements }
       </header>
     </div>
