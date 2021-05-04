@@ -1,7 +1,7 @@
 // Get apiKey from https://www.yelp.com/developers/v3/manage_app;
 const apiKey = 'Bqw9DcGp31OLXAjRz93Rx8TqMDP6HiFQ0lxIRZMk6x53kzarAMFL8hQtatVzUCxSSSs0RvDSTJhOEO5z7IPSgqDilMifA6LliLZoGuwZRGgdUSxYGYknlk68hZGMYHYx';
 const yelp = {
-    searchYelp(term = 'icecream', location = 'alpharetta, ga', limit = 5) 
+    searchInYelp(term = 'icecream', location = 'alpharetta, ga', limit = 5) 
     {
         return fetch(`/businesses/search?term=${term}&location=${location}&sort_by=rating&limit=${limit}`, 
         {       
@@ -33,21 +33,20 @@ const yelp = {
                                 phone: business.phone,
                                 rating: business.rating,
                                 reviewCount: business.review_count,
+                                reviewer: review.user.name,
                                 reviewerComment: review.text,
-                                reviewRating: review.rating,
-                                reviewer: review.user.name
+                                reviewerRating: review.rating
                             }
                             return businessObj;
                         }
                     }).catch(error => {
-                        console.log(error);
-                        throw Error(error);
+                        return error;
                     })
                 })
             }
         }).catch(error => {
             console.error(error);
-            throw Error(error);
+            return error;
         })
     }
 }
