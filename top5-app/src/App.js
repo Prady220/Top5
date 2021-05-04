@@ -10,10 +10,10 @@ class App extends Component {
     };
     this.searchYelp = this.searchYelp.bind(this);
   }
-
-  searchYelp(term, location, sortBy) {
+  
+  async searchYelp(term, location, sortBy) {
     Yelp.searchYelp(term, location, sortBy)
-    .then( (businesses) => {
+    .then((businesses) => {
       this.setState({ businesses: businesses });
       console.log(this.state.businesses);
     })
