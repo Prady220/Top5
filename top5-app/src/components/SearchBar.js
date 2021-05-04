@@ -23,11 +23,11 @@ export default function SearchBar(props) {
     <div>
       <div className="searchBar">
         <div className="searchBar-fields">
-          <label for="term"> Your Favourite? </label>
+          <label htmlFor="term"> Your Favourite? </label>
           <input id="term" placeholder="icecream" onChange={handleTermChange}/>
-          <label for="location"> Where? </label>
+          <label htmlFor="location"> Where? </label>
           <input id="location" placeholder="alpharetta, GA" onChange={handleLocationChange}/>
-          <label for="limit"> How Many? </label>
+          <label htmlFor="limit"> How Many? </label>
           <input id="limit" placeholder="5 (Max Limit 15)" onChange={handleLimitChange}/>
         </div>
 
