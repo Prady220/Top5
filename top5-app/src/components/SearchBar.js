@@ -2,18 +2,18 @@ export default function SearchBar(props) {
   function handleTermChange(e) {
     props.handleTermChange(e);
     e.preventDefault();
-  };
-    
+  }
+
   function handleLocationChange(e) {
     props.handleLocationChange(e);
     e.preventDefault();
-  };
+  }
 
   function handleLimitChange(e) {
     props.handleLimitChange(e);
     e.preventDefault();
   }
-    
+
   function handleSearch(e) {
     props.searchInYelp();
     e.preventDefault();
@@ -24,11 +24,7 @@ export default function SearchBar(props) {
       <div className="searchBar">
         <div className="searchBar-fields">
           <label htmlFor="term"> Your Favourite? </label>
-          <input 
-            id="term" 
-            placeholder="icecream" 
-            onChange={handleTermChange}
-          />
+          <input id="term" placeholder="icecream" onChange={handleTermChange} />
           <label htmlFor="location"> Where? </label>
           <input
             id="location"
@@ -38,7 +34,7 @@ export default function SearchBar(props) {
           <label htmlFor="limit"> How Many? </label>
           <input
             id="limit"
-            placeholder="5 (Max Limit 15)"
+            placeholder="5 (Max Limit 25)"
             onChange={handleLimitChange}
           />
         </div>

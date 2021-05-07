@@ -3,6 +3,7 @@ import Yelp from './util/yelp.js';
 import React, { useState, useEffect } from 'react';
 import BusinessView from './components/BusinessView.js';
 import SearchBar from './components/SearchBar.js';
+import ErrorView from './components/ErrorView';
 
 export default function App() {
   const [loading, setLoading] = useState(true);
@@ -27,25 +28,30 @@ export default function App() {
 
   function handleLimitChange(e) {
     let inputLimit = parseInt(e.target.value);
-    setLimit(inputLimit > 15 ? 15 : inputLimit);
+    setLimit(inputLimit > 25 ? 25 : inputLimit);
   }
 
   async function searchInYelp() {
     try {
+      setError(null);
       setLoading(true);
       const businessesList = await Yelp.searchInYelp(term, location, limit);
-      const businessesResolved = [];
-      businessesList.map(business =>
-        business.then(value => businessesResolved.push(value))
-      );
-      setBusinesses(businessesResolved);
-      setTimeout(() => {
-        setLoading(false);
-      }, 5000);
+      if (businessesList.length > 0) {
+        Promise.all(businessesList)
+          .then(async values => {
+            await setBusinesses(values);
+            setLoading(false);
+          })
+          .catch(error => renderError('Promise not resolved'));
+      }
     } catch (error) {
-      setError('Bad request');
-      setLoading(false);
+      renderError('Bad request');
     }
+  }
+
+  function renderError(error) {
+    setError(error);
+    setLoading(false);
   }
 
   let businessesElements = businesses.map((business, i) => (
@@ -54,13 +60,10 @@ export default function App() {
 
   const errors = error ? error : null;
 
-  if (errors) {
-    return <h1>{errors}. Please reload!</h1>;
-  }
-
   return (
     <div className="App">
       <header className="App-header">
+        {errors && <ErrorView errors={errors} />}
         <SearchBar
           searchInYelp={searchInYelp}
           handleLimitChange={handleLimitChange}
