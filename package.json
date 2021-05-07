@@ -53,5 +53,8 @@
     "*.{js,json,yml,yaml,css,scss,ts,tsx,md}": [
       "prettier --write"
     ]
+  },
+  "dependencies": {
+    "babel-loader": "^8.1.0"
   }
 }
