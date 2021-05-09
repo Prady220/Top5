@@ -8,9 +8,6 @@ import ErrorView from './components/ErrorView';
 export default function App() {
   const [loading, setLoading] = useState(true);
   const [businesses, setBusinesses] = useState([]);
-  const [term, setTerm] = useState('Ice Cream');
-  const [location, setLocation] = useState('Alpharetta, GA');
-  const [limit, setLimit] = useState(5);
   const [error, setError] = useState(null);
 
   useEffect(() => {
@@ -18,20 +15,7 @@ export default function App() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  function handleTermChange(e) {
-    setTerm(e.target.value);
-  }
-
-  function handleLocationChange(e) {
-    setLocation(e.target.value);
-  }
-
-  function handleLimitChange(e) {
-    let inputLimit = parseInt(e.target.value);
-    setLimit(inputLimit > 25 ? 25 : inputLimit);
-  }
-
-  async function searchInYelp() {
+  async function searchInYelp(term, location, limit) {
     try {
       setError(null);
       setLoading(true);
@@ -64,15 +48,7 @@ export default function App() {
     <div className="App">
       <header className="App-header">
         {errors && <ErrorView errors={errors} />}
-        <SearchBar
-          searchInYelp={searchInYelp}
-          handleLimitChange={handleLimitChange}
-          handleLocationChange={handleLocationChange}
-          handleTermChange={handleTermChange}
-        />
-        <h2>
-          Top {limit} places to get {term} in {location}
-        </h2>
+        <SearchBar searchInYelp={searchInYelp} />
         {loading ? <h2>Loading...</h2> : [businessesElements]}
       </header>
     </div>

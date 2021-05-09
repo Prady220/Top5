@@ -1,22 +1,24 @@
+import React, { useState } from 'react';
+
 export default function SearchBar(props) {
+  const [term, setTerm] = useState('Ice Cream');
+  const [location, setLocation] = useState('Alpharetta, GA');
+  const [limit, setLimit] = useState(5);
+
   function handleTermChange(e) {
-    props.handleTermChange(e);
-    e.preventDefault();
+    setTerm(e.target.value);
   }
 
   function handleLocationChange(e) {
-    props.handleLocationChange(e);
-    e.preventDefault();
+    setLocation(e.target.value);
   }
 
   function handleLimitChange(e) {
-    props.handleLimitChange(e);
-    e.preventDefault();
+    setLimit(e.target.value);
   }
 
   function handleSearch(e) {
-    props.searchInYelp();
-    e.preventDefault();
+    props.searchInYelp(term, location, limit);
   }
 
   return (
@@ -43,6 +45,9 @@ export default function SearchBar(props) {
           <button onClick={handleSearch}>Let's Go</button>
         </div>
       </div>
+      <h2>
+        Top {limit} places to get {term} in {location}
+      </h2>
     </div>
   );
 }
